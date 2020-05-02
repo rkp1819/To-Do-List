@@ -9,8 +9,11 @@ const mongoose = require('mongoose')
 // mongo "mongodb+srv://cluster0-lpthl.mongodb.net/test"  --username admin_Raj_Kumar_Panda
 // mongodb+srv://admin_Raj_Kumar_Panda:<password>@cluster0-lpthl.mongodb.net/test?retryWrites=true&w=majority
 //mongo
-mongoose.connect("mongodb+srv://admin_Raj_Kumar_Panda:Test1234@cluster0-lpthl.mongodb.net/toDoListDB", { useNewUrlParser: true,
-                                                          useUnifiedTopology: true});
+mongoose.connect("mongodb+srv://admin_Raj_Kumar_Panda:Test1234@cluster0-lpthl.mongodb.net/toDoListDB",
+                                                          { useNewUrlParser: true,
+                                                          useUnifiedTopology: true, useCreateIndex: true})
+                                                          .then(() => console.log( 'Database Connected' ))
+                                                          .catch(err => console.log( err ));;
 const taskSchema = mongoose.Schema({
     typeOfTask: {
       type: String,
