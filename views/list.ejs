@@ -1,4 +1,4 @@
-<%- include('header') -%>
+<%- include('header',{list_types: list_types}) -%>
 <body>
   <div class="box" id="heading">
     <h1><%=list_title%></h1>
@@ -6,14 +6,17 @@
   <div class="box">
     <% for(var i=0; i<tasks.length; i++){ %>
     <div class="item">
-      <input type="checkbox">
-      <p><%=tasks[i]%></p>
+      <form class="class-checkbox" action=/lists/<%=list_type%>/delete method="post">
+        <input type="hidden" name="list_type" value=<%=list_type%>>
+        <input type="checkbox" name="checkboxId" onchange="this.form.submit()" value=<%=tasks[i]._id%>>
+        <p><%=tasks[i].task%></p>
+      </form>
     </div>
     <%}%>
         <form class="item" action="/" method="post">
           <input type="text" name="task" placeholder="New Task" autocomplete="off">
-          <button type="submit" name="list" value=<%=list_type%>>+</button>
-    </form>
+          <button type="submit" name="list_type" value=<%=list_type%>>+</button>
+        </form>
   </div>
 </body>
 <%- include('footer') -%>

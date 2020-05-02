@@ -1,4 +1,4 @@
-html {
+body {
   background-color: #E4E9FD;
   background-image: -webkit-linear-gradient(65deg, #A683E3 50%, #E4E9FD 50%);
   min-height: 1000px;
@@ -34,6 +34,11 @@ h1 {
   border-bottom: 0;
 }
 
+.class-checkbox {
+  display: flex;
+  align-items: center;
+}
+
 input:checked+p {
   text-decoration: line-through;
   text-decoration-color: #A683E3;
@@ -41,14 +46,14 @@ input:checked+p {
 
 input[type="checkbox"] {
   margin: 20px;
-  transform : scale(1.8);
+  transform : scale(2);
 }
 
 p {
-  margin: 0;
+  margin: 0rem 0rem 0rem 0rem;
   padding: 20px;
-  font-size: 20px;
-  font-weight: 200;
+  font-size: 30px;
+  font-weight: 400;
   color: #00204a;
 }
 
@@ -88,6 +93,11 @@ input[type="text"]:focus {
 ::placeholder {
   color: grey;
   opacity: 1;
+}
+
+nav-item-list {
+  margin: 10px;
+  border-radius: 50%;
 }
 
 footer {

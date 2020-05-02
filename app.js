@@ -2,41 +2,65 @@
 //require
 const express = require('express');
 const bodyParser = require('body-parser');
-const date = require(__dirname+'/date.js')
+const utils = require(__dirname+'/utils.js')
 const app = express()
+const mongoose = require('mongoose')
+
+
+//mongo
+mongoose.connect("mongodb://localhost:27017/toDoListDB", { useNewUrlParser: true,
+                                                          useUnifiedTopology: true});
+const taskSchema = mongoose.Schema({
+    typeOfTask: {
+      type: String,
+      required: [true, "Which kind of task it is?"]
+    },
+    task: {
+      type: String,
+      required: [true, "but... whats the task"]
+    }
+});
+const Task = new mongoose.model('Task', taskSchema);
+
+
 
 //settings
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('public'));
 
-//variable
-const personal_items = [];
-const business_items = [];
-
 //handlers
 app.get("/", function(req, res){
-  res.render('list', {list_type: 'personal', list_title: date.getDate(), tasks: personal_items});
+  req.body.list_type = "Personal";//default list shown in GUI
+  utils.getLists(req, res, Task, utils.findTasks);
 });
 
 app.post('/', function(req, res){
   // res.send("home page");
   //  res.write("<h1>im scribling</h1>");
   // res.send();
-  if(req.body.list=="business"){
-    business_items.push(req.body.task);
-    res.render('list', {list_type: 'business', list_title: date.getDate()+" Business List", tasks: business_items});
-  }else{
-    personal_items.push(req.body.task);
-    res.render('list', {list_type: 'personal', list_title: date.getDate()+" Personal List", tasks: personal_items});
-  }
+  utils.saveTask(req, res, Task);
+  console.log(req.body.list_type);
+  res.redirect('/lists/'+req.body.list_type);
 });
 
-app.get('/business', function(req, res){
-  res.render('list', {list_type: 'business', list_title: date.getDate()+" Business List", tasks: business_items});
+app.post('/lists/:list_types/delete', function(req, res){
+  console.log("deleting: ", req.body.checkboxId, req.body.list_type);
+  utils.getLists(req, res, Task, utils.deleteOne);
+  res.redirect('/lists/'+req.body.list_type);
 });
-app.get('/personal', function(req, res){
-  res.render('list', {list_type: 'personal', list_title: date.getDate()+" Personal List", tasks: personal_items});
+
+app.post("/new_list", function(req, res){
+  console.log("in new list: "+req.body.list_type);
+  res.redirect('/lists/'+req.body.list_type);
+  // utils.getLists(req, res, Task, utils.findTasks);
+});
+
+
+app.get('/lists/:list_type', function(req, res){
+  console.log("in get :list_type: ", req.params.list_type);
+  req.body.list_type = req.params.list_type;
+  utils.getLists(req, res, Task, utils.findTasks);
 });
 //port settings
 app.listen(3000, function(){
