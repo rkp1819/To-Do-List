@@ -65,6 +65,6 @@ app.get('/lists/:list_type', function(req, res){
 });
 //port settings
 let port = process.env.PORT;
-app.listen(port||3000, fu nction(){
+app.listen(port||3000, function(){
   console.log("server started at port 3000");
 });
