@@ -11,7 +11,7 @@ const mongoose = require('mongoose')
 //mongo
 mongoose.connect("mongodb+srv://admin_Raj_Kumar_Panda:Test1234@cluster0-lpthl.mongodb.net/toDoListDB",
                                                           { useNewUrlParser: true,
-                                                          useUnifiedTopology: true, useCreateIndex: true})
+                                                           useCreateIndex: true})
                                                           .then(() => console.log( 'Database Connected' ))
                                                           .catch(err => console.log( err ));;
 const taskSchema = mongoose.Schema({
