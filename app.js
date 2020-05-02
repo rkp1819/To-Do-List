@@ -6,9 +6,10 @@ const utils = require(__dirname+'/utils.js')
 const app = express()
 const mongoose = require('mongoose')
 
-
+// mongo "mongodb+srv://cluster0-lpthl.mongodb.net/test"  --username admin_Raj_Kumar_Panda
+// mongodb+srv://admin_Raj_Kumar_Panda:<password>@cluster0-lpthl.mongodb.net/test?retryWrites=true&w=majority
 //mongo
-mongoose.connect("mongodb://localhost:27017/toDoListDB", { useNewUrlParser: true,
+mongoose.connect("mongodb+srv://admin_Raj_Kumar_Panda:Test1234@cluster0-lpthl.mongodb.net/toDoListDB", { useNewUrlParser: true,
                                                           useUnifiedTopology: true});
 const taskSchema = mongoose.Schema({
     typeOfTask: {
@@ -63,6 +64,7 @@ app.get('/lists/:list_type', function(req, res){
   utils.getLists(req, res, Task, utils.findTasks);
 });
 //port settings
-app.listen(3000, function(){
+let port = process.env.PORT;
+app.listen(port||3000, fu nction(){
   console.log("server started at port 3000");
 });

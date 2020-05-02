@@ -59,9 +59,9 @@ exports.getLists = function(req, res, Task, callback){
       console.log(err);
     } else {
       list_types.push(req.body.list_type);
-      console.log("in get lists: list_type: ", req.body.list_type)
-      console.log("all good");
-      console.log("in get lists: "+[...new Set(list_types)]);
+      // console.log("in get lists: list_type: ", req.body.list_type)
+      // console.log("all good");
+      // console.log("in get lists: "+[...new Set(list_types)]);
       callback(req, res, Task, [...new Set(list_types)]);
     }
   });
